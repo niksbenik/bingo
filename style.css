@@ -1,0 +1,93 @@
+:root {
+  --bingo-blue: #009EFF;
+}
+
+body {
+	background-image: linear-gradient(to bottom right, white, var(--bingo-blue));
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+}
+
+.blue {
+	background: var(--bingo-blue);
+}
+
+.blueText {
+	color: var(--bingo-blue);
+}
+
+.blueOutlinedText {
+	-webkit-text-stroke: 1px var(--bingo-blue);
+	-webkit-text-fill-color: white;
+}
+
+#BingoTable {
+	
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	table-layout: fixed;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td {
+	border: 1px solid black;
+	text-align: center;
+	padding: 0;
+	width: 10em;
+	height: 10em;
+	max-width: 10em;
+	max-height: 10em;
+	div {
+		padding: 1.2rem 1.5rem;
+		min-height: 10rem;
+	}
+}
+
+#ActivityList {
+	display: block;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+input.button {
+	border-radius: 7%;
+	border: none;
+	padding: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 4px 2px;
+	color: white;
+}
+
+input.button:hover {
+	background: black;
+}
+
+input.removeButton {
+	border: none;
+	width: 22px;
+	height: 22px;
+	background: url(resources/icons/cross_icon.svg) no-repeat;
+	background-size: 22px 22px;
+	margin-right: .5%;
+}
+
+input.removeButton:hover {
+	border: none;
+	width: 22px;
+	height: 22px;
+	background: url(resources/icons/cross_icon_hovered.svg) no-repeat;
+	background-size: 22px 22px;
+	margin-right: .5%;
+}
+
+input.spinbox {
+	height: 30px;
+	font-size: 18px;
+}
