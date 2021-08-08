@@ -1,5 +1,5 @@
 :root {
-  --bingo-blue: #009EFF;
+	--bingo-blue: #009EFF;
 }
 
 body {
@@ -7,6 +7,11 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
+}
+
+.bingoWin {
+	background: black;
+	color: white;
 }
 
 .blue {
@@ -23,7 +28,6 @@ body {
 }
 
 #BingoTable {
-	
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	table-layout: fixed;

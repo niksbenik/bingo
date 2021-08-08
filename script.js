@@ -15,7 +15,7 @@ function populateActivityList()
 {
 	let activities = getLocalItem("Activities");
 	if (activities == "") {
-		activities = '["Watch your favourite movie","Listen to good music","Puzzle","Play a fun game","Drink beer"]';
+		activities = '["Watch your favourite movie","Listen to good music","Puzzle","Play a fun game","Drink beer","Take a walk","Ride your bike","Eat pancakes"]';
 		setLocalItem("Activities", activities);
 	}
 	activities = JSON.parse(activities);
@@ -62,10 +62,11 @@ function markForBingo(checkedCells)
 	const n = table.rows.length;
 	for (let r = 0; r < n; ++r)
 		for (let c = 0; c < n; ++c)
-			table.rows[r].cells[c].setAttribute("class", checkedCells.find(element => element[0] == r && element[1] == c) ? "blue" : "");
+			if (checkedCells.find(element => element[0] == r && element[1] == c))
+				table.rows[r].cells[c].setAttribute("class", "bingoWin");
 }
 
-function checkForBingo()
+function updateBingoState()
 {
 	let table = document.getElementById("BingoTableBody");
 	const n = table.rows.length;
@@ -74,7 +75,9 @@ function checkForBingo()
 	for (let r = 0; r < n; ++r) {
 		let rowChecked = true;
 		for (let c = 0; c < n; ++c) {
-			const checked = table.rows[r].cells[c].firstChild.firstChild.checked;
+			let cell = table.rows[r].cells[c];
+			const checked = cell.getAttribute("checked") == "true";
+			cell.setAttribute("class", checked ? "blue" : "");
 			rowChecked &= checked;
 			if (r == c)
 				leftDiagonalChecked &= checked;
@@ -87,7 +90,9 @@ function checkForBingo()
 	for (let c = 0; c < n; ++c) {
 		let colChecked = true;
 		for (let r = 0; r < n; ++r) {
-			const checked = table.rows[r].cells[c].firstChild.firstChild.checked;
+			let cell = table.rows[r].cells[c];
+			const checked = cell.getAttribute("checked") == "true";
+			cell.setAttribute("class", checked ? "blue" : "");
 			colChecked &= checked;
 			if (c + r == n - 1)
 				rightDiagonalChecked &= checked;
@@ -147,29 +152,35 @@ function populateBingoTable(overrideTable = false)
 		let row = table.insertRow();
 		for (let c = 0; c < n; ++c) {
 			let cell = row.insertCell(c);
-			let checkBox = document.createElement("input");
-			checkBox.setAttribute("type", "checkBox");
-			checkBox.checked = empty ? false : tableState[r][c].checked;
-			checkBox.onclick = function ()
+			const tableStateCellChecked = !empty ? tableState[r][c].checked : false;
+			cell.setAttribute("checked", empty ? "false" : (tableStateCellChecked ? "true" : "false"));
+			cell.setAttribute("class", empty ? "" : (tableStateCellChecked ? "blue" : ""));
+			cell.onmouseenter = function ()
 			{
+				cell.style.cursor = "pointer";
+			};
+			cell.onclick = function ()
+			{
+				const cellChecked = cell.getAttribute("checked") != "true";
+				cell.setAttribute("checked", cellChecked ? "true" : "false");
+
 				let tableState = JSON.parse(getLocalItem("TableState"));
-				const checkBoxChecked = checkBox.checked;
 				for (let i = 0; i < n; ++i)
 					for (let j = 0; j < n; ++j)
 						if (tableState[i][j].activity == activity) {
-							tableState[i][j].checked = checkBoxChecked;
-							table.rows[i].cells[j].firstChild.firstChild.checked = checkBoxChecked;
+							tableState[i][j].checked = cellChecked;
+							table.rows[i].cells[j].setAttribute("checked", cellChecked ? "true" : "false");
 						}
 				setLocalItem("TableState", JSON.stringify(tableState));
-				checkForBingo();
+				updateBingoState();
 			};
+
 			let cellDiv = document.createElement("div");
-			cellDiv.appendChild(checkBox);
 			const activity = empty ? activities[activityIndices[r * n + c]] : tableState[r][c].activity;
 			cellDiv.appendChild(document.createTextNode(activity));
 			cell.appendChild(cellDiv);
 			if (empty)
-				tableState[r][c] = {"checked": checkBox.checked, "activity": activity};
+				tableState[r][c] = {"checked": cell.getAttribute("checked") == "true", "activity": activity};
 		}
 	}
 	setLocalItem("TableState", JSON.stringify(tableState));
@@ -244,9 +255,9 @@ doItAgainButton.onclick = function ()
 document.getElementById("RegenerateTableButton").onclick = function ()
 {
 	populateBingoTable(true);
-	checkForBingo();
+	updateBingoState();
 };
 
 populateActivityList();
 populateBingoTable();
-checkForBingo();
+updateBingoState();
