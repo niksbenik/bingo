@@ -55,6 +55,8 @@ div.footer {
 	table-layout: fixed;
 	margin-left: auto;
 	margin-right: auto;
+	border-collapse: separate;
+	border-spacing: 1px;
 }
 
 td {

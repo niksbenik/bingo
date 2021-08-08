@@ -155,9 +155,14 @@ function populateBingoTable(overrideTable = false)
 			const tableStateCellChecked = !empty ? tableState[r][c].checked : false;
 			cell.setAttribute("checked", empty ? "false" : (tableStateCellChecked ? "true" : "false"));
 			cell.setAttribute("class", empty ? "" : (tableStateCellChecked ? "blue" : ""));
+			cell.style.cursor = "pointer";
 			cell.onmouseenter = function ()
 			{
-				cell.style.cursor = "pointer";
+				cell.style.border = "solid white 1px";
+			};
+			cell.onmouseleave = function ()
+			{
+				cell.style.border = "solid black 1px";
 			};
 			cell.onclick = function ()
 			{
