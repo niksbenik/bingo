@@ -1,12 +1,39 @@
 :root {
 	--bingo-blue: #009EFF;
+	--footer-gap: 1em;
+	--footer-height: 3em;
+	--footer-total: calc(var(--footer-gap) + var(--footer-height));
 }
 
 body {
+	margin: 0;
+	padding: 0;
 	background-image: linear-gradient(to bottom right, white, var(--bingo-blue));
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
+}
+
+div.content {
+	margin: .5em;
+	height: auto;
+	margin: 1em auto -var(--footer-total);
+	min-height: 100%;
+	padding: 0 0 var(--footer-total);
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+div.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: var(--footer-height);
+	margin-top: var(--footer-gap);
+	background-color: var(--bingo-blue);
+	color: white;
+	text-align: center;
 }
 
 .bingoWin {
@@ -20,11 +47,6 @@ body {
 
 .blueText {
 	color: var(--bingo-blue);
-}
-
-.blueOutlinedText {
-	-webkit-text-stroke: 1px var(--bingo-blue);
-	-webkit-text-fill-color: white;
 }
 
 #BingoTable {

@@ -7,28 +7,33 @@
 	</head>
 
 	<body>
-		<div class="blue">
-			<h1 class="blueOutlinedText" style="text-align: center;">SELF-CARE BINGO</h1>
+		<div class="blue" style="width: 100%; overflow: auto;">
+			<h1 style="color: white; text-align: center;">SELF-CARE BINGO</h1>
 		</div>
-		<div style="text-align: center">
-			<input id="Spinbox" class="spinbox" type="number" min="3" max="9" step="1" value="3" size="6">
-			<input id="RegenerateTableButton" class="blue button" type="button" value="Regenerate">
-			<table id="BingoTable">
-				<tbody id="BingoTableBody">
-				</tbody>
-			</table>
-		</div>
-		<div id="BingoMessage" style="text-align: center; display: none;">
-			<h2 class="blueText">BINGO</h2>
-			<input id="DoItAgainButton" class="blue button" type="button" value="Do it again">
-		</div>
+		<div class="content">
+			<div style="text-align: center">
+				<input id="Spinbox" class="spinbox" type="number" min="3" max="9" step="1" value="3" size="6">
+				<input id="RegenerateTableButton" class="blue button" type="button" value="Regenerate">
+				<table id="BingoTable">
+					<tbody id="BingoTableBody">
+					</tbody>
+				</table>
+			</div>
+			<div id="BingoMessage" style="text-align: center; display: none;">
+				<h2 class="blueText">BINGO</h2>
+				<input id="DoItAgainButton" class="blue button" type="button" value="Do it again">
+			</div>
+			<div>
+				<h1 class="blueText">Activities</h1>
+			</div>
+			<ul id="ActivityList">
+			</ul>
+			<input id="AddActivityButton" class="blue button" type="button" value="Add activity">
 		<div>
-			<h1 class="blueText">Activities</h1>
+		<div class="footer">
+			<p>Permission is hereby granted to freely copy, modify and distribute this software provided no changes to the footer are made. &copy 2021 niksbenik</p>
 		</div>
-		<ul id="ActivityList">
-		</ul>
-		<input id="AddActivityButton" class="blue button" type="button" value="Add activity">
-		<script type="text/javascript" src="script.js">
-		</script>
 	</body>
+	<script type="text/javascript" src="script.js">
+	</script>
 </html>
