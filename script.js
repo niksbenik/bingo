@@ -136,12 +136,21 @@ function populateBingoTable(overrideTable = false)
 	let activityIndices = [];
 	for (let i = 0; i < n * n; ++i) {
 		let index = -1;
-		for (let repeat = true, iter = 0; repeat && iter < activities.length; ++iter) {
+		let tried = new Set();
+		for (let repeat = true; repeat;) {
 			repeat = false;
 			index = Math.floor(Math.random() * activities.length);
+			tried.add(index);
 			for (let j = 0; j < activityIndices.length; ++j)
 				if (activityIndices[j] == index)
 					repeat = true;
+			if (repeat) {
+				let triedAll = true;
+				for (let j = 0; triedAll && j < activities.length; ++j)
+					triedAll &= tried.has(j);
+				if (triedAll)
+					repeat = false;
+			}
 		}
 		activityIndices[i] = index;
 	}

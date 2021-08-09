@@ -1,14 +1,14 @@
 :root {
-	--bingo-blue: #009EFF;
 	--footer-gap: 1em;
 	--footer-height: 3em;
 	--footer-total: calc(var(--footer-gap) + var(--footer-height));
+	--theme-color: #009EFF;
 }
 
 body {
 	margin: 0;
 	padding: 0;
-	background-image: linear-gradient(to bottom right, white, var(--bingo-blue));
+	background-image: linear-gradient(to bottom right, white, var(--theme-color));
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
@@ -31,7 +31,7 @@ div.footer {
 	width: 100%;
 	height: var(--footer-height);
 	margin-top: var(--footer-gap);
-	background-color: var(--bingo-blue);
+	background-color: var(--theme-color);
 	color: white;
 	text-align: center;
 }
@@ -42,11 +42,11 @@ div.footer {
 }
 
 .blue {
-	background: var(--bingo-blue);
+	background: var(--theme-color);
 }
 
 .blueText {
-	color: var(--bingo-blue);
+	color: var(--theme-color);
 }
 
 #BingoTable {
