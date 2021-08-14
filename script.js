@@ -11,6 +11,8 @@ function setLocalItem(itemName, itemValue)
 	window.localStorage.setItem(itemName, itemValue);
 }
 
+const editSize = "50%";
+
 function populateActivityList()
 {
 	let activities = getLocalItem("Activities");
@@ -21,11 +23,24 @@ function populateActivityList()
 	activities = JSON.parse(activities);
 	let activityList = document.getElementById("ActivityList");
 	activityList.innerHTML = "";
+	let focused = false;
+	const handleEditClose = function (node, save = false)
+	{
+		const edit = node.lastChild;
+		if (edit.nodeName == "INPUT") {
+			const activity = save ? edit.value : edit.getAttribute("original");
+			let textNode = document.createTextNode(activity);
+			if (edit.defaultValue != activity)
+				replaceActivity(edit.defaultValue, activity);
+			node.replaceChild(textNode, edit);
+		}
+	};
 	for (i = 0; i < activities.length; ++i) {
 		let node = document.createElement("li");
 		let removeButton = document.createElement("input");
 		removeButton.setAttribute("class", "removeButton");
 		removeButton.setAttribute("type", "button");
+		removeButton.style.padding = "0 1em 0";
 		removeButton.onclick = function ()
 		{
 			removeActivity(node.lastChild.value);
@@ -37,21 +52,31 @@ function populateActivityList()
 		activityList.appendChild(node);
 		node.onmouseenter = function ()
 		{
-			let textNode = node.lastChild;
-			let edit = document.createElement("input");
-			edit.setAttribute("type", "text");
-			edit.autofocus = true;
-			edit.defaultValue = textNode.nodeValue;
-			node.replaceChild(edit, textNode);
+			if (!focused) {
+				let textNode = node.lastChild;
+				let edit = document.createElement("input");
+				edit.setAttribute("type", "text");
+				edit.setAttribute("size", editSize);
+				edit.autofocus = true;
+				edit.setAttribute("original", edit.defaultValue = textNode.nodeValue);
+				edit.onfocus = function ()
+				{
+					focused = true;
+					edit.onkeyup = function (e)
+					{
+						if (e.key === 'Enter' || e.key === 'Escape') {
+							focused = false;
+							handleEditClose(node, e.key === 'Enter');
+						}
+					};
+				};
+				node.replaceChild(edit, textNode);
+			}
 		};
 		node.onmouseleave = function ()
 		{
-			const edit = node.lastChild;
-			const activity = edit.value;
-			let textNode = document.createTextNode(activity);
-			if (edit.defaultValue != activity)
-				replaceActivity(edit.defaultValue, activity);
-			node.replaceChild(textNode, edit);
+			if (!focused)
+				handleEditClose(node);
 		};
 	}
 }
@@ -107,8 +132,6 @@ function updateBingoState()
 				checkedCells.push([r, c]);
 
 	markForBingo(checkedCells);
-
-	document.getElementById("BingoMessage").style.display = checkedCells.length > 0 ? "block" : "none";
 }
 
 function populateBingoTable(overrideTable = false)
@@ -237,36 +260,48 @@ function removeActivity(activity)
 		}
 }
 
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+window.onscroll = function ()
+{
+	let navbar = document.getElementById("navbar");
+
+	if (window.pageYOffset >= sticky)
+		navbar.classList.add("sticky")
+	else
+		navbar.classList.remove("sticky");
+};
+
 const spinbox = document.getElementById("Spinbox");
 spinbox.oninput = function () { populateBingoTable(true); };
 
 var addActivityButton = document.getElementById("AddActivityButton");
 addActivityButton.onclick = function ()
 {
+	let parentDiv = addActivityButton.parentNode;
 	let edit = document.createElement("input");
 	edit.setAttribute("type", "text");
+	edit.setAttribute("size", editSize);
 	edit.onkeyup = function (e)
 	{
 		if (e.key === 'Enter') {
 			addNewActivity(edit.value);
-			edit.parentNode.replaceChild(addActivityButton, edit);
+			parentDiv.replaceChild(addActivityButton, edit);
+			parentDiv.style.textAlign = "center";
 			populateActivityList();
 		}
-		else if (e.key === 'Escape')
-			edit.parentNode.replaceChild(addActivityButton, edit);
+		else if (e.key === 'Escape') {
+			parentDiv.replaceChild(addActivityButton, edit);
+			parentDiv.style.textAlign = "center";
+		}
 	};
-	addActivityButton.parentNode.replaceChild(edit, addActivityButton);
+	parentDiv.style.textAlign = "left";
+	parentDiv.replaceChild(edit, addActivityButton);
 	edit.focus();
 };
 
-var doItAgainButton = document.getElementById("DoItAgainButton");
-doItAgainButton.onclick = function ()
-{
-	document.getElementById("BingoMessage").style.display = "none";
-	populateBingoTable(true);
-};
-
-document.getElementById("RegenerateTableButton").onclick = function ()
+document.getElementById("RedoButton").onclick = function ()
 {
 	populateBingoTable(true);
 	updateBingoState();
@@ -275,3 +310,6 @@ document.getElementById("RegenerateTableButton").onclick = function ()
 populateActivityList();
 populateBingoTable();
 updateBingoState();
+
+var copyright = document.getElementById("copyright");
+copyright.innerHTML = "Copyright &copy " + (new Date().getFullYear()) + " niksbenik";

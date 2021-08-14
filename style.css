@@ -1,6 +1,6 @@
 :root {
 	--footer-gap: 1em;
-	--footer-height: 3em;
+	--footer-height: 1.2em;
 	--footer-total: calc(var(--footer-gap) + var(--footer-height));
 	--theme-color: #009EFF;
 }
@@ -12,6 +12,48 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
+}
+
+#navbar {
+	background-color: black;
+	width: 100%;
+}
+
+#navbar ul.navlist {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+}
+
+#navbar ul.navlist li {
+	display: inline-block;
+	float: none;
+}
+
+#navbar ul.navlist li a {
+	display: block;
+	padding: 8px 8px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+
+#navbar ul.navlist li a:hover {
+	color: black;
+	background-color: white;
+}
+
+div.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+div.sticky + div.content {
+	padding-top: 60px;
 }
 
 div.content {
@@ -31,7 +73,7 @@ div.footer {
 	width: 100%;
 	height: var(--footer-height);
 	margin-top: var(--footer-gap);
-	background-color: var(--theme-color);
+	background-color: black;
 	color: white;
 	text-align: center;
 }
