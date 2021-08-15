@@ -11,8 +11,6 @@ function setLocalItem(itemName, itemValue)
 	window.localStorage.setItem(itemName, itemValue);
 }
 
-const editSize = "50%";
-
 function populateActivityList()
 {
 	let activities = getLocalItem("Activities");
@@ -56,9 +54,9 @@ function populateActivityList()
 				let textNode = node.lastChild;
 				let edit = document.createElement("input");
 				edit.setAttribute("type", "text");
-				edit.setAttribute("size", editSize);
 				edit.autofocus = true;
 				edit.setAttribute("original", edit.defaultValue = textNode.nodeValue);
+				edit.style.fontSize = node.style.fontSize;
 				edit.onfocus = function ()
 				{
 					focused = true;
@@ -282,7 +280,6 @@ addActivityButton.onclick = function ()
 	let parentDiv = addActivityButton.parentNode;
 	let edit = document.createElement("input");
 	edit.setAttribute("type", "text");
-	edit.setAttribute("size", editSize);
 	edit.onkeyup = function (e)
 	{
 		if (e.key === 'Enter') {

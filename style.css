@@ -62,7 +62,6 @@ div.content {
 	margin: 1em auto -var(--footer-total);
 	min-height: 100%;
 	padding: 0 0 var(--footer-total);
-	box-sizing: border-box;
 	overflow: auto;
 }
 
@@ -160,4 +159,8 @@ input.removeButton:hover {
 input.spinbox {
 	height: 30px;
 	font-size: 18px;
+}
+
+input[type=text] {
+	font-size: inherit;
 }
