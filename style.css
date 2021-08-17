@@ -109,7 +109,7 @@ td {
 	max-width: 10em;
 	max-height: 10em;
 	div {
-		padding: 1.2rem 1.5rem;
+		padding: 1.2em 1.5em;
 		min-height: 10rem;
 	}
 }
@@ -121,7 +121,7 @@ td {
 	margin: 0;
 }
 
-input.button {
+input[type=button] {
 	border-radius: 7%;
 	border: none;
 	padding: 10px;
@@ -134,7 +134,7 @@ input.button {
 	color: white;
 }
 
-input.button:hover {
+input[type=button]:hover {
 	background: black;
 }
 
@@ -162,5 +162,5 @@ input.spinbox {
 }
 
 input[type=text] {
-	font-size: inherit;
+	font: inherit;
 }
